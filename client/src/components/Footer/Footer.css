@@ -1,0 +1,35 @@
+
+  span {
+    color: #666;
+    font-size: 1rem;
+    display: block;
+    position: absolute;
+    bottom: 0px;
+    position: absolute;
+    font-family: 'Nunito', sans-serif;
+    width: 90%;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%) translateY(-50%);
+    text-align: center;
+  }
+  span a {
+    font-family: 'Nunito', sans-serif;
+    color: #ddd;
+    text-decoration: none;
+  }
+  span .fa {
+    color: #E90606;
+  }
+  
+  @-webkit-keyframes pound {
+    to {
+      transform: scale(1.1);
+    }
+  }
+  @keyframes pound {
+    to {
+      transform: scale(1.1);
+    }
+  }
+  
