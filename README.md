@@ -1,5 +1,5 @@
 # realtime-chat-webapp
-A simple chating application built in React using Node.js and Socket.io
+A simple chatting application built in React using Node.js and Socket.io
 
 
 ## Motivation
