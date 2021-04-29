@@ -6,17 +6,21 @@ import { socket } from "../../../utils/socket";
 import "./Message.css";
 
 const Message = ({ message: { text, user, status, messageId } }) => {
-  const name = useSelector((state) => state.user);
+  const name = useSelector((state) => state.user)
+    .trim()
+    .toLowerCase();
 
+  // emit when the app is in background
   useEffect(() => {
     if (user !== name && messageId) {
       socket.emit("delivered", messageId);
     }
   }, [name, user, messageId]);
 
+  // check if user is already in focus and emit the status
   useEffect(() => {
     if (user !== name) {
-      if (status === "send" || status === "seen") {
+      if (status === "send" || status === "delivered") {
         window.addEventListener("focus", () => {
           socket.emit("seen", messageId);
         });

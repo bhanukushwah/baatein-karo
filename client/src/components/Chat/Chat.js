@@ -24,12 +24,14 @@ const Chat = ({ location }) => {
   const room = useSelector((state) => state.room);
   const users = useSelector((state) => state.users);
 
+  // create a connection on mount
   useEffect(() => {
     const { name, room } = queryString.parse(location.search);
 
     dispatch(setRoom({ room: room }));
     dispatch(setCurrentUser({ user: name }));
 
+    // join the room
     socket.emit("join", { name, room }, (error) => {
       if (error) {
         alert(error);
@@ -55,6 +57,7 @@ const Chat = ({ location }) => {
       dispatch(addUsers({ users }));
     });
   }, [users, dispatch]);
+
   return (
     <div className="outerContainer">
       <div className="container">
