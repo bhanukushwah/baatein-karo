@@ -14,21 +14,18 @@ import {
   addUsers,
   setCurrentUser,
   setRoom,
+  updateMessageStatus,
 } from "../../redux/slice";
 import { socket } from "../../utils/socket";
 
 const Chat = ({ location }) => {
   const dispatch = useDispatch();
 
-  const state = useSelector((state) => state);
-  console.log("state", state);
   const room = useSelector((state) => state.room);
   const users = useSelector((state) => state.users);
 
   useEffect(() => {
     const { name, room } = queryString.parse(location.search);
-
-    console.log(name);
 
     dispatch(setRoom({ room: room }));
     dispatch(setCurrentUser({ user: name }));
@@ -42,16 +39,22 @@ const Chat = ({ location }) => {
 
   useEffect(() => {
     socket.on("message", (message) => {
-      console.log(message);
       dispatch(addMessage({ message: message }));
     });
+    socket.on("delivered", (messageId) => {
+      dispatch(updateMessageStatus({ messageId, status: "delivered" }));
+    });
 
-    socket.on("roomData", ({ users }) => {
-      console.log("users", users);
-      dispatch(addUsers({ users }));
+    socket.on("seen", (messageId) => {
+      dispatch(updateMessageStatus({ messageId, status: "seen" }));
     });
   }, [dispatch]);
 
+  useEffect(() => {
+    socket.on("roomData", ({ users }) => {
+      dispatch(addUsers({ users }));
+    });
+  }, [users, dispatch]);
   return (
     <div className="outerContainer">
       <div className="container">

@@ -9,10 +9,10 @@ import "./Messages.css";
 
 const Messages = () => {
   const messages = useSelector((state) => state.messages);
+
   return (
     <ScrollToBottom className="messages">
       {messages.map((message, i) => {
-        console.log(message);
         return (
           <div key={i}>
             <Message message={message} />
